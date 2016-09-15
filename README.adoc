@@ -1,0 +1,3 @@
+= smart-cap
+
+A 'gigawatt' powered project.
