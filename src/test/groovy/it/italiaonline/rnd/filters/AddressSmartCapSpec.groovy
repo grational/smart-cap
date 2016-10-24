@@ -20,8 +20,8 @@ class AddressSmartCapSpec extends Specification {
 			"ATRES,S.R.L."                                                | "Atres, S.r.l."
 			",AUTOFFICINA L.R. MOTORSPORT,"                               | ", Autofficina L.R. Motorsport,"
 			"SPECIALISTA IN OSTETRICIA,GINECOLOGIA ED ENDOCRINOLOGIA"     | "Specialista in Ostetricia, Ginecologia ed Endocrinologia"
-
-      "VIA BOITO ARRIGO,41"                                         | "Via Boito Arrigo, 41"
-      "NUOVA CARROZZERIA,F.LLI MASCHIO DI MASCHIO MASSIMO & C. SNC" | "Nuova Carrozzeria, F.lli Maschio di Maschio Massimo & C. Snc"
+			"VIA BOITO ARRIGO,41"                                         | "Via Boito Arrigo, 41"
+			"NUOVA CARROZZERIA,F.LLI MASCHIO DI MASCHIO MASSIMO & C. SNC" | "Nuova Carrozzeria, F.lli Maschio di Maschio Massimo & C. Snc"
+			"SANTHIA'"                                                    | "Santhià"
 	}
 }
