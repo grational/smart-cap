@@ -28,7 +28,7 @@ project.ext { // {{{
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group                 'it.italiaonline.rnd.filters'
-	version               '1.6.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
+	version               '1.7.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
 	description           'This filter "Titlelize" Italian text'
 	wrapper.gradleVersion "$gradleVersion"
 } // }}}
@@ -37,14 +37,19 @@ repositories { // {{{
 	jcenter()
 
 	// testing nexus server reachability
-	if ( new URL(nexusUrl).text.contains('Sonatype Nexus') ) {
-		logger.warn("Adding maven repositories, nexus <$nexusUrl>")
-		maven {
-			url "${nexusUrl}/content/repositories/snapshots"
-			url "${nexusUrl}/content/repositories/releases"
+	try {
+		if ( new URL(nexusUrl).text.contains('Sonatype Nexus') ) {
+			logger.warn("Adding maven repositories, nexus <$nexusUrl>")
+			maven {
+				url "${nexusUrl}/content/repositories/snapshots"
+				url "${nexusUrl}/content/repositories/releases"
+			}
+		} else {
+			logger.warn("maven repos skipped cause <$nexusUrl> is not reachable!")
 		}
-	} else {
-		logger.warn("maven repos skipped cause <$nexusUrl> is not reachable!")
+	} catch (UnknownHostException uhe) {
+		def host = nexusUrl.find($/(?<=https?://)[^/]+/$)
+		logger.warn("maven repos skipped cause <$host> cannot be resolved!")
 	}
 } // }}}
 
