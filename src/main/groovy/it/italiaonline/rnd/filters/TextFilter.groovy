@@ -36,21 +36,21 @@ interface TextFilter {
 		@Override
 		String result() {
 			new CutPrepositionFilter(
-			  new PrepositionFilter(
-			    new AbbreviationFilter(
-			      new SimpleConjunctionFilter(
-			        new CompanyTypeAcronymFilter(
-			          new RomanNumberFilter(
-			            new CapitalizeFilter(
-			              new NoNullFilter(
-			                this.input
-			              )
-			            )
-			          )
-			        )
-			      )
-			    )
-			  )
+				new PrepositionFilter(
+					new AbbreviationFilter(
+						new SimpleConjunctionFilter(
+							new CompanyTypeAcronymFilter(
+								new RomanNumberFilter(
+									new CapitalizeFilter(
+										new NoNullFilter(
+											this.input
+										)
+									)
+								)
+							)
+						)
+					)
+				)
 			).result()
 		}
 	}
@@ -65,10 +65,13 @@ interface TextFilter {
 		AddressSmartCap(String inpt) {
 			this.input = inpt
 		}
+
 		@Override
 		String result() {
 			new CommaSpacerFilter(
-				new TextFilter.SmartCap(this.input)
+				new TownApostrophe2AccentFilter(
+					new TextFilter.SmartCap(this.input)
+				)
 			).result()
 		}
 	}

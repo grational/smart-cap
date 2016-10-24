@@ -1,0 +1,135 @@
+package it.italiaonline.rnd.filters
+
+import java.util.regex.Pattern
+
+class TownApostrophe2AccentFilter implements TextFilter {
+
+	private final TextFilter origin
+	private final Pattern pattern =
+		~/(?i)(\w+[aeiou])'(?=[\p{P}&&[^.]]|\h|$)/;
+
+	Map accented_towns = [ // {{{
+		"aglie":                  "Agliè",
+		"alluvioni cambio":       "Alluvioni Cambiò",
+		"alme":                   "Almè",
+		"ali":                    "Alì",
+		"antey-saint-andre":      "Antey-Saint-André",
+		"arsie":                  "Arsiè",
+		"barzano":                "Barzanò",
+		"bascape":                "Bascapè",
+		"baselga di pine":        "Baselga di Pinè",
+		"basico":                 "Basicò",
+		"bastia mondovi":         "Bastia Mondovì",
+		"belvi":                  "Belvì",
+		"bianze":                 "Bianzè",
+		"bidoni":                 "Bidonì",
+		"budduso":                "Buddusò",
+		"cagno":                  "Cagnò",
+		"canicatti":              "Canicattì",
+		"cantu":                  "Cantù",
+		"carde":                  "Cardè",
+		"carre":                  "Carrè",
+		"carru":                  "Carrù",
+		"castel san niccolo":     "Castel San Niccolò",
+		"castelfranco piandisco": "Castelfranco Piandiscò",
+		"cavaglia":               "Cavaglià",
+		"cefalu":                 "Cefalù",
+		"centa san nicolo":       "Centa San Nicolò",
+		"cesaro":                 "Cesarò",
+		"ciglie":                 "Cigliè",
+		"cimina":                 "Ciminà",
+		"cirie":                  "Ciriè",
+		"ciro":                   "Cirò",
+		"codogne":                "Codognè",
+		"condro":                 "Condrò",
+		"cuorgne":                "Cuorgnè",
+		"dare":                   "Darè",
+		"dasa":                   "Dasà",
+		"dolce":                  "Dolcè",
+		"erbe":                   "Erbè",
+		"fenegro":                "Fenegrò",
+		"fiave":                  "Fiavè",
+		"forli":                  "Forlì",
+		"forza d'agro":           "Forza d'Agrò",
+		"fosso":                  "Fossò",
+		"frazzano":               "Frazzanò",
+		"galtelli":               "Galtellì",
+		"gambolo":                "Gambolò",
+		"gonnosno":               "Gonnosnò",
+		"gressoney-la-trinite":   "Gressoney-la-Trinité",
+		"gualtieri sicamino":     "Gualtieri Sicaminò",
+		"leini":                  "Leinì",
+		"lode":                   "Lodè",
+		"loranze":                "Loranzè",
+		"lusiglie":               "Lusigliè",
+		"maiera":                 "Maierà",
+		"male":                   "Malè",
+		"mansue":                 "Mansuè",
+		"mazze":                  "Mazzè",
+		"melicucca":              "Melicuccà",
+		"meri":                   "Merì",
+		"mondovi":                "Mondovì",
+		"montaldo di mondovi":    "Montaldo di Mondovì",
+		"monta":                  "Montà",
+		"muggio":                 "Muggiò",
+		"nardo":                  "Nardò",
+		"nughedu san nicolo":     "Nughedu San Nicolò",
+		"onani":                  "Onanì",
+		"palu":                   "Palù",
+		"panchia":                "Panchià",
+		"paterno":                "Paternò",
+		"patu":                   "Patù",
+		"petrona":                "Petronà",
+		"plati":                  "Platì",
+		"ponte san nicolo":       "Ponte San Nicolò",
+		"portobuffole":           "Portobuffolè",
+		"prela":                  "Prelà",
+		"revo":                   "Revò",
+		"rocca ciglie":           "Rocca Cigliè",
+		"roccaforte mondovi":     "Roccaforte Mondovì",
+		"ronca":                  "Roncà",
+		"rora":                   "Rorà",
+		"rosa":                   "Rosà",
+		"roveredo di gua":        "Roveredo di Guà",
+		"salo":                   "Salò",
+		"san michele mondovi":    "San Michele Mondovì",
+		"san pietro di carida":   "San Pietro di Caridà",
+		"sanfre":                 "Sanfrè",
+		"santa maria hoe":        "Santa Maria Hoè",
+		"santa maria la carita":  "Santa Maria la Carità",
+		"santhia":                "Santhià",
+		"scorze":                 "Scorzè",
+		"secli":                  "Seclì",
+		"senorbi":                "Senorbì",
+		"serra ricco":            "Serra Riccò",
+		"soddi":                  "Soddì",
+		"sorga":                  "Sorgà",
+		"staletti":               "Stalettì",
+		"temu":                   "Temù",
+		"torpe":                  "Torpè",
+		"torre mondovi":          "Torre Mondovì",
+		"tortoli":                "Tortolì",
+		"trinita":                "Trinità",
+		"vestigne":               "Vestignè",
+		"vialfre":                "Vialfrè",
+		"vigano":                 "Viganò",
+		"viggiu":                 "Viggiù",
+		"villa d'alme":           "Villa d'Almè",
+		"villanova mondovi":      "Villanova Mondovì",
+		"viu":                    "Viù",
+		"zane":                   "Zanè",
+		"zerbolo":                "Zerbolò"
+	] // }}}
+
+	TownApostrophe2AccentFilter(TextFilter orig) {
+		this.origin = orig
+	}
+
+	@Override
+	String result() {
+		origin.result().replaceAll(pattern) { all, town ->
+			accented_towns[town.toLowerCase()] ?: all
+		}
+	}
+}
+// vim: fdm=marker
