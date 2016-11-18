@@ -228,3 +228,5 @@ gradle-app.setting
 
 # it contains sensitive data
 gradle.properties
+# ignore rsc/ ideas for future works
+rsc/

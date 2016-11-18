@@ -18,7 +18,7 @@ plugins {
 // [general] configuration
 project.ext { // {{{
 	groovyVersion   = '2.4.7'
-	gradleVersion   = '3.0'
+	gradleVersion   = '3.2'
 	spockVersion    = '1.0-groovy-2.4'
 	codenarcVersion = '0.24.1'
 	slf4jVersion    = '1.7.21'
@@ -28,7 +28,7 @@ project.ext { // {{{
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group                 'it.italiaonline.rnd.filters'
-	version               '1.7.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
+	version               '1.7.1' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
 	description           'This filter "Titlelize" Italian text'
 	wrapper.gradleVersion "$gradleVersion"
 } // }}}
@@ -125,11 +125,12 @@ check {
 }
 // }}}
 
-// [tasks] definition {{{
-// [listJars] print to stdout the jars used by the project
-task listJars << {
-	// print out the jars used by the project
-	configurations.compile.each { File file -> println file.name }
+// [tasks] listJars definition {{{
+task listJars {
+	description = 'print out the jars used by the project'
+	doLast {
+		configurations.compile.each { File file -> println file.name }
+	}
 } // }}}
 
 // vim: ft=groovy:fdm=marker

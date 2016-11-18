@@ -2,12 +2,12 @@ package it.italiaonline.rnd.filters
 
 import spock.lang.Specification
 
-class CutPrepositionFilterSpec extends Specification {
+class ElidedPrepositionFilterSpec extends Specification {
 
   def "Should make prepositions in lowercase"() {
 
     expect:
-      output == new CutPrepositionFilter(
+      output == new ElidedPrepositionFilter(
                   new TextFilter.NoNullFilter(input)
                 ).result()
 
@@ -18,6 +18,7 @@ class CutPrepositionFilterSpec extends Specification {
       "DELLA SERA DELL'EST"         | "DELLA SERA dell'EST"
       "DAL BASSO E DALL'ALTO"       | "DAL BASSO E dall'ALTO"
       "ARRIVAVANO ALL'ALTIPIANO"    | "ARRIVAVANO all'ALTIPIANO"
+			"ROMANO D'EZZELLINO"          | "ROMANO d'EZZELLINO"
 
   }
   //sull

@@ -35,7 +35,7 @@ interface TextFilter {
 		}
 		@Override
 		String result() {
-			new CutPrepositionFilter(
+			new ElidedPrepositionFilter(
 				new PrepositionFilter(
 					new AbbreviationFilter(
 						new SimpleConjunctionFilter(
