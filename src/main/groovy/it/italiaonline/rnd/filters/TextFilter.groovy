@@ -35,15 +35,17 @@ interface TextFilter {
 		}
 		@Override
 		String result() {
-			new ElidedPrepositionFilter(
-				new PrepositionFilter(
-					new AbbreviationFilter(
-						new SimpleConjunctionFilter(
-							new CompanyTypeAcronymFilter(
-								new RomanNumberFilter(
-									new CapitalizeFilter(
-										new NoNullFilter(
-											this.input
+			new ProvinceAbbreviationFilter(
+				new ElidedPrepositionFilter(
+					new PrepositionFilter(
+						new AbbreviationFilter(
+							new SimpleConjunctionFilter(
+								new CompanyTypeAcronymFilter(
+									new RomanNumberFilter(
+										new CapitalizeFilter(
+											new NoNullFilter(
+												this.input
+											)
 										)
 									)
 								)
