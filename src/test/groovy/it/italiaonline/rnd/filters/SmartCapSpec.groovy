@@ -68,7 +68,7 @@ class SmartCapSpec extends Specification {
 			"CANNAVO' GAETANO SRL"                                                          | "Cannavo' Gaetano Srl"
 			"CANNAVO' GAETANO S.R.L."                                                       | "Cannavo' Gaetano S.r.l."
 			"CARAIBI 2 S.N.C DI MICHELA FALCO & C."                                         | "Caraibi 2 S.n.c di Michela Falco & C."
-			"CENTRO ESTETICO GOCCE D'AMBRA"                                                 | "Centro Estetico Gocce d'Ambra"
+			"CENTRO ESTETICO GOCCE D'AMBRA"                                                 | "Centro Estetico Gocce D'Ambra"
 			"CHIRIATTI EDILIZIA S.A.S. DI CHIRIATTI FLAVIO & C."                            | "Chiriatti Edilizia S.a.s. di Chiriatti Flavio & C."
 			"CONTI CAV. COLOMBO COSTRUZIONI EDILI E RESTAURI DI CONTI RANDOLFO & C. S.N.C." | "Conti Cav. Colombo Costruzioni Edili e Restauri di Conti Randolfo & C. S.n.c."
 			"D'ALOISIO AVV. CLAUDIA STUDIO LEGALE"                                          | "D'Aloisio Avv. Claudia Studio Legale"
@@ -98,7 +98,7 @@ class SmartCapSpec extends Specification {
 			"ISTITUTO DI BELLEZZA' DONATELLA'"                                              | "Istituto di Bellezza' Donatella'"
 			"LA MAISON DE LA BEAUTE' S.A.S. DI FIORITO CONCETTA"                            | "La Maison De La Beaute' S.a.s. di Fiorito Concetta"
 			"LA MARIC S.A.S. DI RICCIO GAETANO"                                             | "La Maric S.a.s. di Riccio Gaetano"
-			"LA PIOLA D'LE 2 SURELE"                                                        | "La Piola d'Le 2 Surele"
+			"LA PIOLA D'LE 2 SURELE"                                                        | "La Piola D'Le 2 Surele"
 			"LATTERIA#21"                                                                   | "Latteria#21"
 			"LE NINFEE ESTETICA & BENESSERE"                                                | "Le Ninfee Estetica & Benessere"
 			"LERARIO AVV. NICOLA"                                                           | "Lerario Avv. Nicola"
@@ -158,7 +158,7 @@ class SmartCapSpec extends Specification {
 			"SARTORIS D.SSA LAURA"                                                          | "Sartoris D.ssa Laura"
 			"REBOLINI GIORGIO_ASSISTENZA RIELLO"                                            | "Rebolini Giorgio_Assistenza Riello"
 			"GRAZIOLI CLIMASERVICE S.R.L._AGENZIA E ASSISTENZA RIELLO"                      | "Grazioli Climaservice S.r.l._Agenzia e Assistenza Riello"
-			"ROMANO D'EZZELLINO"                                                            | "Romano d'Ezzellino"
+			"ROMANO D'EZZELLINO"                                                            | "Romano D'Ezzellino"
 
 	}
 }
