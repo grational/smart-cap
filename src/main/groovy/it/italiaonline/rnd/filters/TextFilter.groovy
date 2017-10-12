@@ -1,5 +1,7 @@
 package it.italiaonline.rnd.filters
 
+import org.apache.commons.text.similarity.JaroWinklerDistance
+
 /**
  * This interface defines an object capable of declaring its support status for
  * the http2 and spdy protocols (usually a webserver).
@@ -75,6 +77,40 @@ interface TextFilter {
 					new TextFilter.SmartCap(this.input)
 				)
 			).result()
+		}
+	}
+
+	/**
+	 * Smart class that apply the filters just if the original
+	 * string have a string distance above a certain threshold
+	 */
+	final class ConditionalSmartCap implements TextFilter {
+
+		private final String input
+		private final Double threshold
+
+		ConditionalSmartCap(
+			String inpt,
+			Double  thr
+		) {
+			this.input     = inpt
+			this.threshold = thr
+		}
+
+		@Override
+		String result() {
+			def result
+			def filtered = new TextFilter.SmartCap(this.input).result()
+			def distance = new JaroWinklerDistance().apply(
+				filtered,
+				this.input
+			)
+			if ( distance >= this.threshold )
+				result = this.input
+			else
+				result = filtered
+			
+			return result
 		}
 	}
 

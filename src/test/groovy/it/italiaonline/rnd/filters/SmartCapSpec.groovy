@@ -159,6 +159,21 @@ class SmartCapSpec extends Specification {
 			"REBOLINI GIORGIO_ASSISTENZA RIELLO"                                            | "Rebolini Giorgio_Assistenza Riello"
 			"GRAZIOLI CLIMASERVICE S.R.L._AGENZIA E ASSISTENZA RIELLO"                      | "Grazioli Climaservice S.r.l._Agenzia e Assistenza Riello"
 			"ROMANO D'EZZELLINO"                                                            | "Romano D'Ezzellino"
+	}
 
+	def "Should maintain the original string if the similarity is above a certain threshold"() {
+		expect:
+			filtered == new TextFilter.ConditionalSmartCap(
+			              businessName,
+			              threshold
+			            ).result()
+		where:
+			businessName          | threshold | filtered
+			"ARLETTI DR. FLAVIO"  |      0.95 | "Arletti Dr. Flavio"
+			"ATRES S.R.L."        |      0.95 | "Atres S.r.l."
+			"Macelleria Di Gioia" |      0.95 | "Macelleria Di Gioia"
+			"MaceLleria Di Gioia" |      0.95 | "Macelleria di Gioia"
+			"G come Di Gioia"     |      0.85 | "G come Di Gioia"
+			"G come Di Gioia"     |      0.95 | "G Come di Gioia"
 	}
 }

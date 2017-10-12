@@ -17,18 +17,19 @@ plugins {
 
 // [general] configuration
 project.ext { // {{{
-	groovyVersion   = '2.4.7'
-	gradleVersion   = '3.2'
-	spockVersion    = '1.0-groovy-2.4'
-	codenarcVersion = '0.24.1'
-	slf4jVersion    = '1.7.21'
-	log4jVersion    = '2.6.2'
+	groovyVersion      = '2.4.12'
+	gradleVersion      = '4.2.1'
+	spockVersion       = '1.1-groovy-2.4'
+	codenarcVersion    = '0.24.1'
+	slf4jVersion       = '1.7.21'
+	log4jVersion       = '2.6.2'
+	commonsTextVersion = '1.1'
 } // }}}
 
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group                 'it.italiaonline.rnd.filters'
-	version               '1.9.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
+	version               '1.10.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
 	description           'This filter "Titlelize" Italian text'
 	wrapper.gradleVersion "$gradleVersion"
 } // }}}
@@ -62,6 +63,9 @@ dependencies { // {{{
 	compile "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
 	compile "org.apache.logging.log4j:log4j-api:$log4jVersion"
 	compile "org.apache.logging.log4j:log4j-core:$log4jVersion"
+
+	// calculate Levenshtein distance
+	compile "org.apache.commons:commons-text:$commonsTextVersion"
 
 	// We use the awesome Spock testing and specification framework
 	testCompile "org.spockframework:spock-core:$spockVersion"
@@ -131,5 +135,28 @@ task listJars {
 		configurations.compile.each { File file -> println file.name }
 	}
 } // }}}
+
+// use parallelization for tests
+tasks.withType(Test) {
+	maxParallelForks = Runtime.runtime.availableProcessors() / 2
+}
+task uniTest(type: Test) {
+	description = 'unit tests task'
+	exclude '**/*ISpec*'
+	exclude '**/*FSpec*'
+}
+task intTest(type: Test) {
+	description = 'integration tests task'
+	exclude '**/*USpec*'
+	exclude '**/*FSpec*'
+}
+task funTest(type: Test) {
+	description = 'functional tests task'
+	exclude '**/*USpec*'
+	exclude '**/*ISpec*'
+}
+gradle.startParameter.excludedTaskNames += "uniTest"
+gradle.startParameter.excludedTaskNames += "intTest"
+gradle.startParameter.excludedTaskNames += "funTest"
 
 // vim: ft=groovy:fdm=marker
