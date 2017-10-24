@@ -6,7 +6,7 @@ class TownApostrophe2AccentFilter implements TextFilter {
 
 	private final TextFilter origin
 	private final Pattern pattern =
-		~/(?i)(\w+[aeiou])'(?=[\p{P}&&[^.]]|\h|$)/;
+		~/(?i)(\w+[aeiou])'(?=[\p{P}&&[^.]]|[ \t]|$)/;
 
 	Map accented_towns = [ // {{{
 		"aglie":                  "Agliè",

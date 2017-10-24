@@ -5,7 +5,7 @@ import java.util.regex.Pattern
 class CommaSpacerFilter implements TextFilter {
 
   private final TextFilter origin
-  private final Pattern pattern = ~/,(?=\H)/
+  private final Pattern pattern = ~/,(?=[^ \t])/
 
   CommaSpacerFilter(TextFilter orig) {
     this.origin = orig

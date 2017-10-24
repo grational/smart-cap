@@ -10,7 +10,7 @@ ruleset {
   ruleset('rulesets/exceptions.xml')
   ruleset('rulesets/formatting.xml') {
     SpaceAroundMapEntryColon {
-      characterAfterColonRegex = /\h/
+      characterAfterColonRegex = /[ \t]/
     }
   }
   ruleset('rulesets/generic.xml')

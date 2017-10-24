@@ -6,7 +6,7 @@ class SimpleConjunctionFilter implements TextFilter {
 
   private final TextFilter origin
   private final Pattern pattern =
-    ~/(?i)(?<=\h)(?:ed|e|o)(?=\h)/
+    ~/(?i)(?<=[ \t])(?:ed|e|o)(?=[ \t])/
     //e, né, o, inoltre, ma, però, dunque, anzi, che
 
   SimpleConjunctionFilter(TextFilter orig) {
