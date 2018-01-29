@@ -167,13 +167,16 @@ class SmartCapSpec extends Specification {
 			              businessName,
 			              threshold
 			            ).result()
+
 		where:
-			businessName          | threshold | filtered
-			"ARLETTI DR. FLAVIO"  |      0.95 | "Arletti Dr. Flavio"
-			"ATRES S.R.L."        |      0.95 | "Atres S.r.l."
-			"Macelleria Di Gioia" |      0.95 | "Macelleria Di Gioia"
-			"MaceLleria Di Gioia" |      0.95 | "Macelleria di Gioia"
-			"G come Di Gioia"     |      0.85 | "G come Di Gioia"
-			"G come Di Gioia"     |      0.95 | "G Come di Gioia"
+			businessName                            | threshold | filtered
+			"ARLETTI DR. FLAVIO"                    | 0.95      | "Arletti Dr. Flavio"
+			"ATRES S.R.L."                          | 0.95      | "Atres S.r.l."
+			"Macelleria Di Gioia"                   | 0.95      | "Macelleria Di Gioia"
+			"MaceLleria Di Gioia"                   | 0.95      | "Macelleria di Gioia"
+			"G come Di Gioia"                       | 0.85      | "G come Di Gioia"
+			"G come Di Gioia"                       | 0.95      | "G Come di Gioia"
+			"Macelleria di Biase"                   | 0.95      | "Macelleria di Biase"
+			"CMTmotor - Centro Moto Ticino Bergamo" | 0.90      | "CMTmotor - Centro Moto Ticino Bergamo"
 	}
 }

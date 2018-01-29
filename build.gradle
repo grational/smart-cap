@@ -17,7 +17,7 @@ plugins {
 
 // [general] configuration
 project.ext { // {{{
-	groovyVersion      = '2.4.12'
+	groovyVersion      = '2.4.7'
 	gradleVersion      = '4.2.1'
 	spockVersion       = '1.1-groovy-2.4'
 	codenarcVersion    = '0.24.1'
@@ -29,7 +29,7 @@ project.ext { // {{{
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group                 'it.italiaonline.rnd.filters'
-	version               '1.10.0' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
+	version               '1.10.1' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
 	description           'This filter "Titlelize" Italian text'
 	wrapper.gradleVersion "$gradleVersion"
 } // }}}
