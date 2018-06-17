@@ -12,6 +12,8 @@ plugins {
 	id 'codenarc'
 	id 'net.saliman.cobertura' version '2.3.2'
 	id 'maven'
+	// awesome git tag / gradle version integration
+	id 'pl.allegro.tech.build.axion-release' version '1.9.1'
 }
 // }}}
 
@@ -29,7 +31,7 @@ project.ext { // {{{
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group                 'it.italiaonline.rnd.filters'
-	version               '1.10.1' // (remove tail -SNAPSHOT for releases e.g., '1.0.0')
+	version               scmVersion.version // '0.5.0' (remove -SNAPSHOT for releases)
 	description           'This filter "Titlelize" Italian text'
 	wrapper.gradleVersion "$gradleVersion"
 } // }}}
