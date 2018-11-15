@@ -43,7 +43,7 @@ class SmartCapSpec extends Specification {
 
 	/**
 	 * Behavioral test made against a list provided by Italia On Line.
-	 * 100 real cases mixed between 'customers' and 'inseriti'
+	 * 100 real cases mixed among 'customers' and 'inseriti'
 	 */
 	def "All filters together should correctly match these tests"() {
 		expect:

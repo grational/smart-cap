@@ -18,7 +18,7 @@ class ElidedPrepositionFilterSpec extends Specification {
       "DELLA SERA DELL'EST"         | "DELLA SERA dell'EST"
       "DAL BASSO E DALL'ALTO"       | "DAL BASSO E dall'ALTO"
       "ARRIVAVANO ALL'ALTIPIANO"    | "ARRIVAVANO all'ALTIPIANO"
-			"ROMANO D'EZZELLINO"          | "ROMANO D'EZZELLINO"
+      "ROMANO D'EZZELLINO"          | "ROMANO D'EZZELLINO"
 
   }
   //sull
