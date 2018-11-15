@@ -4,10 +4,28 @@
 from TextFilter import SmartCap as sc
 
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+args = sys.argv[1:]
 
-if len(sys.argv) < 2:
-    print 'usage: ' + sys.argv[0] + ' <one [or more words]>'
+def usage():
+    print 'usage: ' + sys.argv[0] + ' default <one [or more words]>'
+    print 'usage: ' + sys.argv[0] + ' address <one [or more words]>'
+    print 'usage: ' + sys.argv[0] + ' tolerance <threshold> <one [or more words]>'
     sys.exit(1)
 
-input_string = " ".join(sys.argv[1:])
-print sc.smart_cap(input_string)
+if not len(args) > 0:
+    usage()
+
+if args[0] == 'default':
+    input_string = u" ".join(args[1:])
+    print sc.smart_cap(input_string)
+elif args[0] == 'address':
+    input_string = u" ".join(args[1:])
+    print sc.address_smart_cap(input_string)
+elif args[0] == 'tolerance':
+    threshold = args[1]
+    input_string = u" ".join(args[2:])
+    print sc.conditional_smart_cap(input_string,threshold)
+else:
+    usage()

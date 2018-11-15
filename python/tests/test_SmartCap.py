@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from TextFilter import SmartCap
 
-
 def test_abbreviation_filter():
     assert SmartCap.abbreviation_filter(u"F.LLI SASSO")               == u"F.lli SASSO"
     assert SmartCap.abbreviation_filter(u"FR.LLI SASSO")              == u"FR.LLI SASSO"
@@ -26,6 +25,14 @@ def test_capitalize_filter():
     assert SmartCap.capitalize_filter(u"TE-ST")                       == u"Te-St"
 
 
+def test_comma_space_filter():
+    assert SmartCap.comma_space_filter(u"virgola,senza spazio")                == u"virgola, senza spazio"
+    assert SmartCap.comma_space_filter(u"virgola alla fine,")                  == u"virgola alla fine,"
+    assert SmartCap.comma_space_filter(u",virgola iniziale e finale,")         == u", virgola iniziale e finale,"
+    assert SmartCap.comma_space_filter(u"virgola con tab,	e senza,dopo") == u"virgola con tab,	e senza, dopo"
+    assert SmartCap.comma_space_filter(u"  ,   virgola con tab,	e senza,dopo") == u"  ,   virgola con tab,	e senza, dopo"
+
+
 def test_company_type_acronym_filter():
     assert SmartCap.company_type_acronym_filter(u"SoCiEtÀ s.p.a.-RICCA") == u"SoCiEtÀ S.p.a.-RICCA"
     assert SmartCap.company_type_acronym_filter(u"SoCiEtÀ s.p.a-RICCA")  == u"SoCiEtÀ S.p.a-RICCA"
@@ -42,12 +49,14 @@ def test_company_type_acronym_filter():
     assert SmartCap.company_type_acronym_filter(u"SoCiEtÀ S.P.A.S.")     == u"SoCiEtÀ S.P.A.S."
 
 
-def test_cut_preposition_filter():
-    assert SmartCap.cut_preposition_filter(u"PER POCO SULL'ACQUA")         == u"PER POCO sull'ACQUA"
-    assert SmartCap.cut_preposition_filter(u"ANCHE NELL'ANCORA BUIO VELO") == u"ANCHE nell'ANCORA BUIO VELO"
-    assert SmartCap.cut_preposition_filter(u"DELLA SERA DELL'EST")         == u"DELLA SERA dell'EST"
-    assert SmartCap.cut_preposition_filter(u"DAL BASSO E DALL'ALTO")       == u"DAL BASSO E dall'ALTO"
-    assert SmartCap.cut_preposition_filter(u"ARRIVAVANO ALL'ALTIPIANO")    == u"ARRIVAVANO all'ALTIPIANO"
+def test_elided_preposition_filter():
+    assert SmartCap.elided_preposition_filter(u"PER POCO SULL'ACQUA")         == u"PER POCO sull'ACQUA"
+    assert SmartCap.elided_preposition_filter(u"ANCHE NELL'ANCORA BUIO VELO") == u"ANCHE nell'ANCORA BUIO VELO"
+    assert SmartCap.elided_preposition_filter(u"DELLA SERA DELL'EST")         == u"DELLA SERA dell'EST"
+    assert SmartCap.elided_preposition_filter(u"DAL BASSO E DALL'ALTO")       == u"DAL BASSO E dall'ALTO"
+    assert SmartCap.elided_preposition_filter(u"ARRIVAVANO ALL'ALTIPIANO")    == u"ARRIVAVANO all'ALTIPIANO"
+    assert SmartCap.elided_preposition_filter(u"ROMANO D'EZZELLINO")          == u"ROMANO D'EZZELLINO"
+
 
 def test_preposition_filter():
     assert SmartCap.preposition_filter(u"PERCIÒ DI QUESTO")              == u"PERCIÒ di QUESTO"
@@ -62,6 +71,17 @@ def test_preposition_filter():
     assert SmartCap.preposition_filter(u"ODE AD OGNI PIE' SOSPESO")      == u"ODE ad OGNI PIE' SOSPESO"
     assert SmartCap.preposition_filter(u"E AL SOSPIRO DEL VENTO")        == u"E al SOSPIRO del VENTO"
     assert SmartCap.preposition_filter(u"E ALLO SCALPICCIO DEI CAVALLI") == u"E allo SCALPICCIO dei CAVALLI"
+
+
+def test_province_abbreviation_filter():
+    assert SmartCap.province_abbreviation_filter(u"Città del Vaticano (cv)")        == u"Città del Vaticano (CV)"
+    assert SmartCap.province_abbreviation_filter(u"Acciano (Aq)")                   == u"Acciano (AQ)"
+    assert SmartCap.province_abbreviation_filter(u"Altino (Ch)")                    == u"Altino (CH)"
+    assert SmartCap.province_abbreviation_filter(u"Corvara (Pe)")                   == u"Corvara (PE)"
+    assert SmartCap.province_abbreviation_filter(u"Aliano (Mt)")                    == u"Aliano (MT)"
+    assert SmartCap.province_abbreviation_filter(u"Rionero in Vulture (Pz)")        == u"Rionero in Vulture (PZ)"
+    assert SmartCap.province_abbreviation_filter(u"Laino Borgo (Cs)")               == u"Laino Borgo (CS)"
+    assert SmartCap.province_abbreviation_filter(u"Santo Stefano di Rogliano (Cs)") == u"Santo Stefano di Rogliano (CS)"
 
 
 def test_roman_number_filter():
@@ -81,8 +101,37 @@ def test_roman_number_filter():
 
 
 def test_simple_conjunction_filter():
-    assert SmartCap.simple_conjunction_filter(u'HANSEL E GRETEL')             == u'HANSEL e GRETEL'
-    assert SmartCap.simple_conjunction_filter(u'O MANGIAMO O ANDIAMO A CASA') == u'O MANGIAMO o ANDIAMO A CASA'
+    assert SmartCap.simple_conjunction_filter(u"HANSEL E GRETEL")             == u"HANSEL e GRETEL"
+    assert SmartCap.simple_conjunction_filter(u"O MANGIAMO O ANDIAMO A CASA") == u"O MANGIAMO o ANDIAMO A CASA"
+
+
+def test_address_smart_cap():
+    assert SmartCap.address_smart_cap(u"ARLETTI,DR. FLAVIO")                                          == u"Arletti, Dr. Flavio"
+    assert SmartCap.address_smart_cap(u"ATRES,S.R.L.")                                                == u"Atres, S.r.l."
+    assert SmartCap.address_smart_cap(u",AUTOFFICINA L.R. MOTORSPORT,")                               == u", Autofficina L.R. Motorsport,"
+    assert SmartCap.address_smart_cap(u"SPECIALISTA IN OSTETRICIA,GINECOLOGIA ED ENDOCRINOLOGIA")     == u"Specialista in Ostetricia, Ginecologia ed Endocrinologia"
+    assert SmartCap.address_smart_cap(u"VIA BOITO ARRIGO,41")                                         == u"Via Boito Arrigo, 41"
+    assert SmartCap.address_smart_cap(u"NUOVA CARROZZERIA,F.LLI MASCHIO DI MASCHIO MASSIMO & C. SNC") == u"Nuova Carrozzeria, F.lli Maschio di Maschio Massimo & C. Snc"
+    assert SmartCap.address_smart_cap(u"SANTHIA'")                                                    == u'Santhià'
+
+
+def test_town_apostrophe2accent_filter():
+    assert SmartCap.town_apostrophe2accent_filter(u"santhia'") == u'Santhià'
+    assert SmartCap.town_apostrophe2accent_filter(u"cuorgne'") == u'Cuorgnè'
+    assert SmartCap.town_apostrophe2accent_filter(u"forli'")   == u'Forlì'
+    assert SmartCap.town_apostrophe2accent_filter(u"vigano'")  == u'Viganò'
+    assert SmartCap.town_apostrophe2accent_filter(u"cefalu'")  == u'Cefalù'
+
+
+def test_conditional_smart_cap():
+    assert SmartCap.conditional_smart_cap(u"ARLETTI DR. FLAVIO", 0.95) == u"Arletti Dr. Flavio"
+    assert SmartCap.conditional_smart_cap(u"ATRES S.R.L.", 0.95) == u"Atres S.r.l."
+    assert SmartCap.conditional_smart_cap(u"Macelleria Di Gioia", 0.95) == u"Macelleria Di Gioia"
+    assert SmartCap.conditional_smart_cap(u"MaceLleRia Di Gioia", 0.95) == u"Macelleria di Gioia"
+    assert SmartCap.conditional_smart_cap(u"G come Di Gioia", 0.85) == u"G come Di Gioia"
+    assert SmartCap.conditional_smart_cap(u"G come Di Gioia", 0.95) == u"G Come di Gioia"
+    assert SmartCap.conditional_smart_cap(u"Macelleria di Biase", 0.95) == u"Macelleria di Biase"
+    assert SmartCap.conditional_smart_cap(u"CMTmotor - Centro Moto Ticino Bergamo", 0.90) == u"CMTmotor - Centro Moto Ticino Bergamo"
 
 
 def test_smart_cap():
@@ -191,3 +240,4 @@ def test_smart_cap():
     assert SmartCap.smart_cap(u"SARTORIS D.SSA LAURA")                                                          == u"Sartoris D.ssa Laura"
     assert SmartCap.smart_cap(u"REBOLINI GIORGIO_ASSISTENZA RIELLO")                                            == u"Rebolini Giorgio_Assistenza Riello"
     assert SmartCap.smart_cap(u"GRAZIOLI CLIMASERVICE S.R.L._AGENZIA E ASSISTENZA RIELLO")                      == u"Grazioli Climaservice S.r.l._Agenzia e Assistenza Riello"
+    assert SmartCap.smart_cap(u"ROMANO D'EZZELLINO")                                                            == u"Romano D'Ezzellino"
