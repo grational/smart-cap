@@ -10,21 +10,21 @@ plugins {
 	id 'build-dashboard'
 	id 'project-report'
 	id 'codenarc'
-	id 'net.saliman.cobertura' version '2.5.4'
+	id 'net.saliman.cobertura' version '2.6.0'
 	// awesome git tag / gradle version integration
-	id 'pl.allegro.tech.build.axion-release' version '1.9.1'
+	id 'pl.allegro.tech.build.axion-release' version '1.10.0'
 }
 // }}}
 
 // [general] configuration
 project.ext { // {{{
-	groovyVersion      = '2.4.7'
-	gradleVersion      = '4.2.1'
-	spockVersion       = '1.1-groovy-2.4'
-	codenarcVersion    = '0.24.1'
-	slf4jVersion       = '1.7.21'
-	log4jVersion       = '2.6.2'
-	commonsTextVersion = '1.1'
+	groovyVersion      = '2.5.6'
+	gradleVersion      = '5.2.1'
+	spockVersion       = '1.3-groovy-2.5'
+	codenarcVersion    = '1.3'
+	slf4jVersion       = '1.7.25'
+	log4jVersion       = '2.11.2'
+	commonsTextVersion = '1.6'
 } // }}}
 
 project.with { // {{{
@@ -41,20 +41,19 @@ repositories { // {{{
 
 
 dependencies { // {{{
-	// Groovy language support
-	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+	implementation (
+		// Groovy language support
+		"org.codehaus.groovy:groovy:$groovyVersion",
+		// Slf4j dependencies with log4j2 backend
+		"org.slf4j:slf4j-api:$slf4jVersion",
+		// calculate Levenshtein distance
+		"org.apache.commons:commons-text:$commonsTextVersion"
+	)
 
-	// Slf4j dependencies with log4j2 backend
-	compile "org.slf4j:slf4j-api:$slf4jVersion"
-	compile "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
-	compile "org.apache.logging.log4j:log4j-api:$log4jVersion"
-	compile "org.apache.logging.log4j:log4j-core:$log4jVersion"
-
-	// calculate Levenshtein distance
-	compile "org.apache.commons:commons-text:$commonsTextVersion"
-
-	// We use the awesome Spock testing and specification framework
-	testCompile "org.spockframework:spock-core:$spockVersion"
+	testImplementation (
+		// We use the awesome Spock testing and specification framework
+		"org.spockframework:spock-core:$spockVersion"
+	)
 } // }}}
 
 // codenarc groovy source analyses

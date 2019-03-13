@@ -22,7 +22,7 @@ package it.italiaonline.rnd.filters
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   Buddha bless this code to make it (almost) bug-free
  */
-import spock.lang.Specification
+import spock.lang.*
 
 class SmartCapSpec extends Specification {
 
@@ -173,7 +173,7 @@ class SmartCapSpec extends Specification {
 			"ARLETTI DR. FLAVIO"                    | 0.95      | "Arletti Dr. Flavio"
 			"ATRES S.R.L."                          | 0.95      | "Atres S.r.l."
 			"Macelleria Di Gioia"                   | 0.95      | "Macelleria Di Gioia"
-			"MaceLleria Di Gioia"                   | 0.95      | "Macelleria di Gioia"
+			"MaCelleria Di Gioia"                   | 0.95      | "Macelleria di Gioia"
 			"G come Di Gioia"                       | 0.85      | "G come Di Gioia"
 			"G come Di Gioia"                       | 0.95      | "G Come di Gioia"
 			"Macelleria di Biase"                   | 0.95      | "Macelleria di Biase"
