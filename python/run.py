@@ -10,8 +10,8 @@ args = sys.argv[1:]
 
 def usage():
     print 'usage: ' + sys.argv[0] + ' default <one [or more words]>'
-    print 'usage: ' + sys.argv[0] + ' address <one [or more words]>'
-    print 'usage: ' + sys.argv[0] + ' tolerance <threshold> <one [or more words]>'
+    print '       ' + sys.argv[0] + ' address <one [or more words]>'
+    print '       ' + sys.argv[0] + ' tolerance <threshold> <one [or more words]>'
     sys.exit(1)
 
 if not len(args) > 0:
