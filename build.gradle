@@ -10,6 +10,7 @@ plugins {
 	id 'build-dashboard'
 	id 'project-report'
 	id 'codenarc'
+	id 'java-library'
 	id 'net.saliman.cobertura' version '2.6.0'
 	// awesome git tag / gradle version integration
 	id 'pl.allegro.tech.build.axion-release' version '1.10.0'
@@ -41,9 +42,12 @@ repositories { // {{{
 
 
 dependencies { // {{{
-	implementation (
+	api (
 		// Groovy language support
-		"org.codehaus.groovy:groovy:$groovyVersion",
+		"org.codehaus.groovy:groovy:$groovyVersion"
+	)
+
+	implementation (
 		// Slf4j dependencies with log4j2 backend
 		"org.slf4j:slf4j-api:$slf4jVersion",
 		// calculate Levenshtein distance
