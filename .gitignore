@@ -1,6 +1,9 @@
 # Created with 'gigawatt' using the API of https://www.gitignore.io #
 # @parameters: java gradle vim sublimetext eclipse intellij linux osx
 
+# ignore the gradle configuration file added specifically to upload on the local nexus
+build_iol.gradle
+
 ### Vim ###
 # swap
 [._]*.s[a-w][a-z]
