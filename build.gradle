@@ -17,6 +17,12 @@ plugins {
 }
 // }}}
 
+scmVersion {
+	tag {
+		prefix = 'release-'
+	}
+}
+
 // [general] configuration
 project.ext { // {{{
 	groovyVersion      = '3.0.10'
