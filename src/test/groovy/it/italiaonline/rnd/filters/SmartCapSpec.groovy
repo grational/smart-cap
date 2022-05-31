@@ -161,6 +161,7 @@ class SmartCapSpec extends Specification {
 			"ROMANO D'EZZELLINO"                                                            | "Romano D'Ezzellino"
 	}
 
+	@Unroll
 	def "Should maintain the original string if the similarity is above a certain threshold"() {
 		expect:
 			filtered == new TextFilter.ConditionalSmartCap(
@@ -178,5 +179,9 @@ class SmartCapSpec extends Specification {
 			"G come Di Gioia"                       | 0.95      | "G Come di Gioia"
 			"Macelleria di Biase"                   | 0.95      | "Macelleria di Biase"
 			"CMTmotor - Centro Moto Ticino Bergamo" | 0.90      | "CMTmotor - Centro Moto Ticino Bergamo"
+			// Exception requested by Giovanni Bandieri - 2020-03-05 17.42
+			"IIS Service"                           | 0.85      | "IIS Service"
+			// Test from Simone Pozzi
+			"C.M.C. SERVICE"                        | 0.80      | "C.M.C. SERVICE"
 	}
 }
