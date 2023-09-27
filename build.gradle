@@ -11,7 +11,6 @@ plugins {
 	id 'project-report'
 	id 'codenarc'
 	id 'java-library'
-	id 'net.saliman.cobertura' version '4.0.0'
 	// awesome git tag / gradle version integration
 	id 'pl.allegro.tech.build.axion-release' version '1.13.9'
 }
@@ -95,9 +94,6 @@ check {
 	// clean before check
 	dependsOn 'clean'
 	// create the code coverage report
-	dependsOn 'cobertura'
-	// set the correct order for the dep tasks
-	tasks.findByName('cobertura').mustRunAfter 'clean'
 }
 // }}}
 
@@ -111,7 +107,7 @@ task listJars {
 
 // use parallelization for tests
 tasks.withType(Test) {
-	useJUnitPlatform() 
+	useJUnitPlatform()
 	maxParallelForks = Runtime.runtime.availableProcessors() / 2
 }
 task uniTest(type: Test) {

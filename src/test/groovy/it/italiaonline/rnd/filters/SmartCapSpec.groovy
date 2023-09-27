@@ -159,6 +159,10 @@ class SmartCapSpec extends Specification {
 			"REBOLINI GIORGIO_ASSISTENZA RIELLO"                                            | "Rebolini Giorgio_Assistenza Riello"
 			"GRAZIOLI CLIMASERVICE S.R.L._AGENZIA E ASSISTENZA RIELLO"                      | "Grazioli Climaservice S.r.l._Agenzia e Assistenza Riello"
 			"ROMANO D'EZZELLINO"                                                            | "Romano D'Ezzellino"
+			// https://servicedesk.italiaonline.it/browse/DIP-285475: special treatment for URLs
+			"ICOMMERCE SRL (www.prezzoforte.it)"                                            | "Icommerce Srl (www.prezzoforte.it)"
+			"ICOMMERCE SRL (HTTPS://WWW.PREZZOFORTE.IT)"                                    | "Icommerce Srl (https://www.prezzoforte.it)"
+			"ICOMMERCE SRL (HTTPS://WWW.PREZZOFORTE.IT/INFO.HTML)"                          | "Icommerce Srl (https://www.prezzoforte.it/info.html)"
 	}
 
 	@Unroll
