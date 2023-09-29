@@ -11,6 +11,7 @@ plugins {
 	id 'project-report'
 	id 'codenarc'
 	id 'java-library'
+	id 'maven-publish'
 	// awesome git tag / gradle version integration
 	id 'pl.allegro.tech.build.axion-release' version '1.13.9'
 }
@@ -129,4 +130,27 @@ gradle.startParameter.excludedTaskNames += "uniTest"
 gradle.startParameter.excludedTaskNames += "intTest"
 gradle.startParameter.excludedTaskNames += "funTest"
 
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from(components.java)
+		}
+	}
+	repositories {
+		maven {
+			name = 'IOLNexus3'
+			def releases = "${nexus_url}${nexus_repository_releases}"
+			def snapshots = "${nexus_url}${nexus_repository_snapshots}"
+			url = version.endsWith('SNAPSHOT') ? snapshots : releases
+			credentials {
+				username nexus_username
+				password nexus_password
+			}
+		}
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
 // vim: ft=groovy:fdm=marker
