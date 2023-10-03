@@ -23,6 +23,11 @@ scmVersion {
 	}
 }
 
+allprojects {
+	sourceCompatibility = 8
+	targetCompatibility = sourceCompatibility
+}
+
 // [general] configuration
 project.ext { // {{{
 	groovyVersion      = '3.0.10'

@@ -35,6 +35,7 @@ interface TextFilter {
 		SmartCap(String inpt) {
 			this.input = inpt
 		}
+
 		@Override
 		String result() {
 			new ProvinceAbbreviationFilter (
