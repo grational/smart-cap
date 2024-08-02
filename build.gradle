@@ -5,15 +5,14 @@
 */
 // [plugins] section {{{
 plugins {
-	id 'groovy'
-	id 'eclipse'
-	id 'build-dashboard'
-	id 'project-report'
-	id 'codenarc'
+	// to use the 'api' keyword in dependencies
 	id 'java-library'
-	id 'maven-publish'
+	// support for groovy
+	id 'groovy'
 	// awesome git tag / gradle version integration
-	id 'pl.allegro.tech.build.axion-release' version '1.13.9'
+	id 'pl.allegro.tech.build.axion-release' version '1.14.5'
+	// publish on a maven-compatible repository
+	id 'maven-publish'
 }
 // }}}
 
@@ -24,25 +23,15 @@ scmVersion {
 }
 
 allprojects {
-	sourceCompatibility = 8
-	targetCompatibility = sourceCompatibility
+	targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 // [general] configuration
-project.ext { // {{{
-	groovyVersion      = '3.0.10'
-	spockVersion       = '2.1-groovy-3.0'
-	codenarcVersion    = '3.0.1'
-	slf4jVersion       = '1.7.36'
-	log4jVersion       = '2.17.2'
-	commonsTextVersion = '1.9'
-} // }}}
-
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
-	group                 'it.italiaonline.rnd.filters'
-	version               scmVersion.version // '0.5.0' (remove -SNAPSHOT for releases)
-	description           'This filter "Titlelize" Italian text'
+	group 'it.italiaonline.rnd.filters'
+	version scmVersion.version // '0.5.0' (remove -SNAPSHOT for releases)
+	description 'This filter "Titlelize" Italian text'
 } // }}}
 
 repositories { // {{{
@@ -53,62 +42,20 @@ repositories { // {{{
 dependencies { // {{{
 	api (
 		// Groovy language support
-		"org.codehaus.groovy:groovy:$groovyVersion"
+		'org.codehaus.groovy:groovy:3.0.22'
 	)
 
 	implementation (
 		// Slf4j dependencies with log4j2 backend
-		"org.slf4j:slf4j-api:$slf4jVersion",
+		'org.slf4j:slf4j-api:2.0.12',
 		// calculate Levenshtein distance
-		"org.apache.commons:commons-text:$commonsTextVersion"
+		'org.apache.commons:commons-text:1.11.0'
 	)
 
 	testImplementation (
 		// We use the awesome Spock testing and specification framework
-		"org.spockframework:spock-core:$spockVersion"
+		"org.spockframework:spock-core:2.3-groovy-3.0"
 	)
-} // }}}
-
-// codenarc groovy source analyses
-codenarc{
-	toolVersion = "$codenarcVersion"
-
-	codenarcMain {
-		configFile = rootProject.file('config/codenarc/ruleset.groovy')
-		exclude "**/package-info.*"
-		ignoreFailures true       // does not block builds
-		maxPriority1Violations 0
-		maxPriority2Violations 10
-		maxPriority3Violations 20
-	}
-	codenarcTest {
-		configFile = rootProject.file('config/codenarc/ruleset-test.groovy')
-		ignoreFailures true
-		maxPriority1Violations 0
-		maxPriority2Violations 10
-		maxPriority3Violations 20
-	}
-}
-
-// [tasks] configuration {{{
-jar {
-	// execute check task when create the jar
-	dependsOn 'check'
-}
-
-check {
-	// clean before check
-	dependsOn 'clean'
-	// create the code coverage report
-}
-// }}}
-
-// [tasks] listJars definition {{{
-task listJars {
-	description = 'print out the jars used by the project'
-	doLast {
-		configurations.compile.each { File file -> println file.name }
-	}
 } // }}}
 
 // use parallelization for tests
@@ -134,26 +81,6 @@ task funTest(type: Test) {
 gradle.startParameter.excludedTaskNames += "uniTest"
 gradle.startParameter.excludedTaskNames += "intTest"
 gradle.startParameter.excludedTaskNames += "funTest"
-
-publishing {
-	publications {
-		maven(MavenPublication) {
-			from(components.java)
-		}
-	}
-	repositories {
-		maven {
-			name = 'IOLNexus3'
-			def releases = "${nexus_url}${nexus_repository_releases}"
-			def snapshots = "${nexus_url}${nexus_repository_snapshots}"
-			url = version.endsWith('SNAPSHOT') ? snapshots : releases
-			credentials {
-				username nexus_username
-				password nexus_password
-			}
-		}
-	}
-}
 
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
