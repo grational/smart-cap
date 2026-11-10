@@ -187,5 +187,9 @@ class SmartCapSpec extends Specification {
 			"IIS Service"                           | 0.85      | "IIS Service"
 			// Test from Simone Pozzi
 			"C.M.C. SERVICE"                        | 0.80      | "C.M.C. SERVICE"
+      // Test from Andrea Domeniconi
+			"ATRES S.R.L."                          | 0.0       | "ATRES S.R.L."
+			"IIS Service"                           | 1.0       | "Iis Service"
+			""                                      | 0.85      | ""
 	}
 }

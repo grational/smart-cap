@@ -1,3 +1,102 @@
 = smart-cap
 
-A 'gigawatt' powered project.
+smart-cap is a small Groovy and Java library for capitalizing Italian
+business names and addresses. It handles abbreviations, company types,
+prepositions, Roman numerals, and URLs.
+
+== Installation
+
+Use JitPack and replace `VERSION` with a published tag or commit from this repository.
+
+*Gradle*
+
+[source,groovy]
+----
+repositories {
+	mavenCentral()
+	maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+	implementation 'com.github.grational:smart-cap:VERSION'
+}
+----
+
+*Maven*
+
+[source,xml]
+----
+<repositories>
+	<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
+</repositories>
+
+<dependency>
+	<groupId>com.github.grational</groupId>
+	<artifactId>smart-cap</artifactId>
+	<version>VERSION</version>
+</dependency>
+----
+
+== Quick Start
+
+The same API works from Java and Groovy:
+
+[source,java]
+----
+import it.italiaonline.rnd.filters.TextFilter;
+
+new TextFilter.SmartCap("ATRES S.R.L.").result();
+// Atres S.r.l.
+
+new TextFilter.AddressSmartCap("VIA BOITO ARRIGO,41").result();
+// Via Boito Arrigo, 41
+
+new TextFilter.AddressSmartCap("SANTHIA'").result();
+// Santhià
+
+new TextFilter.ConditionalSmartCap("G come Di Gioia", 0.85d).result();
+// G come Di Gioia
+----
+
+== Core API
+
+[cols="1,2",options="header"]
+|===
+| Type | Purpose
+| `TextFilter.SmartCap` | Capitalize Italian business text.
+| `TextFilter.AddressSmartCap` | Also fix comma spacing and known town accents.
+| `TextFilter.ConditionalSmartCap` | Preserve text when similarity meets the threshold.
+|===
+
+Call `result()` to get the text. Null input throws `IllegalArgumentException`.
+
+Conditional capitalization compares the original and capitalized text using
+Jaro-Winkler similarity. If the score is at least the threshold, the original
+is preserved; otherwise, the capitalized text is returned. A threshold of `0`
+always preserves the input; `1` preserves only exact matches.
+
+== Compatibility
+
+The `groovy-4` branch builds with JDK 17, targets Java 8 bytecode, and declares
+Groovy 4.0.30 as a runtime dependency. The same published JAR passes all
+tests and Java caller checks on Java 25 with both Groovy 4.0.30 and 5.0.6.
+
+== Local Development
+
+Use JDK 17, then run:
+
+[source,bash]
+----
+./gradlew clean build
+./gradlew publishToMavenLocal
+----
+
+JitPack runs the build and tests before publishing.
+
+== Release
+
+After checks pass, tag the release and push the branch and tag. Verify that
+the tagged JAR and POM resolve through JitPack before using that version.

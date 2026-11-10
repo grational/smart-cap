@@ -1,6 +1,6 @@
 package it.italiaonline.rnd.filters
 
-import org.apache.commons.text.similarity.JaroWinklerDistance
+import org.apache.commons.text.similarity.JaroWinklerSimilarity
 
 /**
  * This interface defines an object capable of declaring its support status for
@@ -85,7 +85,7 @@ interface TextFilter {
 
 	/**
 	 * Smart class that apply the filters just if the original
-	 * string have a string distance above a certain threshold
+	 * string has a similarity below a certain threshold
 	 */
 	final class ConditionalSmartCap implements TextFilter {
 
@@ -104,11 +104,11 @@ interface TextFilter {
 		String result() {
 			def result
 			def filtered = new TextFilter.SmartCap(this.input).result()
-			def distance = new JaroWinklerDistance().apply(
+			def similarity = new JaroWinklerSimilarity().apply(
 				filtered,
 				this.input
 			)
-			if ( distance >= this.threshold )
+			if ( similarity >= this.threshold )
 				result = this.input
 			else
 				result = filtered

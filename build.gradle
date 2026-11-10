@@ -42,7 +42,7 @@ repositories { // {{{
 dependencies { // {{{
 	api (
 		// Groovy language support
-		'org.codehaus.groovy:groovy:3.0.22'
+		'org.apache.groovy:groovy:4.0.30'
 	)
 
 	implementation (
@@ -54,9 +54,22 @@ dependencies { // {{{
 
 	testImplementation (
 		// We use the awesome Spock testing and specification framework
-		"org.spockframework:spock-core:2.3-groovy-3.0"
+		"org.spockframework:spock-core:2.3-groovy-4.0"
 	)
 } // }}}
+
+// [publishing] configuration {{{
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = 'com.github.grational'
+			artifactId = 'smart-cap'
+			version = scmVersion.version
+			from components.java
+		}
+	}
+}
+// }}}
 
 // use parallelization for tests
 tasks.withType(Test) {
