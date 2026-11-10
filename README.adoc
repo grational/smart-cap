@@ -1,12 +1,13 @@
 = smart-cap
 
-smart-cap is a small Groovy and Java library for capitalizing Italian
+smart-cap is a small Java library for capitalizing Italian
 business names and addresses. It handles abbreviations, company types,
 prepositions, Roman numerals, and URLs.
 
 == Installation
 
-Use JitPack and replace `VERSION` with a published tag or commit from this repository.
+Use JitPack with the `release-2.0.0` tag. Other published tags or commits can also
+be used as the dependency version.
 
 *Gradle*
 
@@ -18,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.github.grational:smart-cap:VERSION'
+	implementation 'com.github.grational:smart-cap:release-2.0.0'
 }
 ----
 
@@ -36,13 +37,13 @@ dependencies {
 <dependency>
 	<groupId>com.github.grational</groupId>
 	<artifactId>smart-cap</artifactId>
-	<version>VERSION</version>
+	<version>release-2.0.0</version>
 </dependency>
 ----
 
 == Quick Start
 
-The same API works from Java and Groovy:
+The same application programming interface (API) works from Java and Groovy:
 
 [source,java]
 ----
@@ -80,13 +81,33 @@ always preserves the input; `1` preserves only exact matches.
 
 == Compatibility
 
-The `groovy-4` branch builds with JDK 17, targets Java 8 bytecode, and declares
-Groovy 4.0.30 as a runtime dependency. The same published JAR passes all
-tests and Java caller checks on Java 25 with both Groovy 4.0.30 and 5.0.6.
+Version 2.0.0 is implemented entirely in Java and runs on Java 8 or later.
+Production code is compiled with `--release 8`, which checks both the bytecode
+target and the Java platform APIs used by the library.
+
+Groovy and Spock are test dependencies only. Applications do not need Groovy
+or a logging framework to use smart-cap. Apache Commons Text, and its transitive
+dependency Commons Lang, remain runtime dependencies.
+
+The package names, public filter classes, constructors, `result()` methods,
+and the town dictionary's `getAccented_towns()` / `setAccented_towns()` accessors
+are preserved. `ConditionalSmartCap(String, Double)` retains its boxed `Double`
+parameter for existing compiled callers. Groovy applications can continue to
+call the library using their own Groovy runtime.
+
+This is a major release because filters no longer implement `GroovyObject`
+or expose Groovy-generated metaclass and missing-property methods. Code using
+those Groovy-specific hooks must be updated.
+
+Conditional capitalization uses `JaroWinklerSimilarity`, fixing the behavior
+with Commons Text 1.10 and later. Earlier smart-cap code depended on
+`JaroWinklerDistance` returning a similarity score, an Apache bug corrected in
+Commons Text 1.10. The intended rule remains: preserve the original text when
+its similarity is at least the threshold.
 
 == Local Development
 
-Use JDK 17, then run:
+Use Java Development Kit (JDK) 17 to build, then run:
 
 [source,bash]
 ----
@@ -94,9 +115,24 @@ Use JDK 17, then run:
 ./gradlew publishToMavenLocal
 ----
 
-JitPack runs the build and tests before publishing.
+`build` runs the Spock suite and a Java consumer check with production
+dependencies only; that check fails if Groovy appears on its class path.
+
+To run both checks on another Java installation while keeping the build on
+JDK 17:
+
+[source,bash]
+----
+./gradlew check -PtestJavaHome=/path/to/java8
+----
+
+The checks are verified on Java 8, 17, and 25. JitPack builds on JDK 17 and runs
+the checks before publishing.
 
 == Release
 
-After checks pass, tag the release and push the branch and tag. Verify that
-the tagged JAR and POM resolve through JitPack before using that version.
+Release tags use the `release-` prefix, for example `release-2.0.0`. The Gradle
+project version is `2.0.0`; the JitPack dependency version is the complete tag.
+After checks pass, push the release commit and tag. Verify that the tagged Java
+archive (JAR) and Project Object Model (POM) dependency metadata resolve through
+JitPack, and that the published artifact works without Groovy.

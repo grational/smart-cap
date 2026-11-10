@@ -187,9 +187,16 @@ class SmartCapSpec extends Specification {
 			"IIS Service"                           | 0.85      | "IIS Service"
 			// Test from Simone Pozzi
 			"C.M.C. SERVICE"                        | 0.80      | "C.M.C. SERVICE"
-      // Test from Andrea Domeniconi
+			// Test from Andrea Domeniconi
 			"ATRES S.R.L."                          | 0.0       | "ATRES S.R.L."
 			"IIS Service"                           | 1.0       | "Iis Service"
 			""                                      | 0.85      | ""
+			// Preserve the historical comparison semantics during the Java migration.
+			"IIS Service"                           | null      | "IIS Service"
+			"IIS Service"                           | Double.NaN | "Iis Service"
+			"IIS Service"                           | Double.NEGATIVE_INFINITY | "IIS Service"
+			"IIS Service"                           | Double.POSITIVE_INFINITY | "Iis Service"
+			"IIS Service"                           | -1.0      | "IIS Service"
+			"IIS Service"                           | 2.0       | "Iis Service"
 	}
 }

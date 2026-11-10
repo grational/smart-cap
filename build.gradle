@@ -7,7 +7,7 @@
 plugins {
 	// to use the 'api' keyword in dependencies
 	id 'java-library'
-	// support for groovy
+	// Groovy support for Spock tests only
 	id 'groovy'
 	// awesome git tag / gradle version integration
 	id 'pl.allegro.tech.build.axion-release' version '1.14.5'
@@ -23,14 +23,24 @@ scmVersion {
 }
 
 allprojects {
+	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+java {
+	withSourcesJar()
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
 }
 
 // [general] configuration
 project.with { // {{{
 	//project.name is set in the settings.gradle with rootProject.name
 	group 'it.italiaonline.rnd.filters'
-	version scmVersion.version // '0.5.0' (remove -SNAPSHOT for releases)
+	version scmVersion.version
 	description 'This filter "Titlelize" Italian text'
 } // }}}
 
@@ -40,19 +50,13 @@ repositories { // {{{
 
 
 dependencies { // {{{
-	api (
-		// Groovy language support
-		'org.apache.groovy:groovy:4.0.30'
-	)
-
 	implementation (
-		// Slf4j dependencies with log4j2 backend
-		'org.slf4j:slf4j-api:2.0.12',
-		// calculate Levenshtein distance
+		// Jaro-Winkler similarity for conditional capitalization
 		'org.apache.commons:commons-text:1.11.0'
 	)
 
 	testImplementation (
+		'org.apache.groovy:groovy:4.0.30',
 		// We use the awesome Spock testing and specification framework
 		"org.spockframework:spock-core:2.3-groovy-4.0"
 	)
@@ -74,8 +78,24 @@ publishing {
 // use parallelization for tests
 tasks.withType(Test) {
 	useJUnitPlatform()
-	maxParallelForks = Runtime.runtime.availableProcessors() / 2
+	maxParallelForks = Math.max(1, Runtime.runtime.availableProcessors().intdiv(2))
+	if (project.hasProperty('testJavaHome')) {
+		executable = "${project.property('testJavaHome')}/bin/java"
+	}
 }
+
+tasks.register('javaCompatibilityTest', JavaExec) {
+	description = 'Run Java consumer checks using production dependencies only.'
+	group = 'verification'
+	dependsOn testClasses
+	classpath = sourceSets.test.output + sourceSets.main.runtimeClasspath
+	mainClass = 'it.italiaonline.rnd.filters.JavaCompatibilityCheck'
+	if (project.hasProperty('testJavaHome')) {
+		executable = "${project.property('testJavaHome')}/bin/java"
+	}
+}
+
+check.dependsOn javaCompatibilityTest
 task uniTest(type: Test) {
 	description = 'unit tests task'
 	exclude '**/*ISpec*'
@@ -97,5 +117,6 @@ gradle.startParameter.excludedTaskNames += "funTest"
 
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
+	options.release = 8
 }
 // vim: ft=groovy:fdm=marker
