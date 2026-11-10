@@ -1,0 +1,16 @@
+= Changelog
+
+== 2.0.0 — 2026-11-10
+
+* Convert all production filters from Groovy to Java, retaining Java 8 compatibility.
+* Keep Groovy and Spock as test dependencies only; remove the unused logging dependency.
+* Preserve public filter names, constructors, results, and town dictionary accessors.
+* Remove the Groovy-generated object, metaclass, and missing-property interfaces.
+  Consumers relying on those hooks need to migrate; ordinary Java and Groovy calls
+  remain supported.
+* Integrate Andrea Domeniconi's contribution in
+  https://github.com/grational/smart-cap/pull/1[pull request #1]: JitPack publishing,
+  documentation, and conditional capitalization based on Jaro-Winkler similarity.
+  This restores the intended threshold behavior with recent Commons Text versions.
+* Add Java consumer checks without Groovy and preserve edge-case threshold behavior.
+  Verify the test suite and consumer checks on Java 8, 17, and 25.
