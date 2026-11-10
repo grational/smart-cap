@@ -6,7 +6,7 @@ prepositions, Roman numerals, and URLs.
 
 == Installation
 
-Use JitPack with the `release-2.0.0` tag. Other published tags or commits can also
+Use JitPack with the `v2.0.0` tag. Other published tags or commits can also
 be used as the dependency version.
 
 *Gradle*
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.github.grational:smart-cap:release-2.0.0'
+	implementation 'com.github.grational:smart-cap:v2.0.0'
 }
 ----
 
@@ -37,7 +37,7 @@ dependencies {
 <dependency>
 	<groupId>com.github.grational</groupId>
 	<artifactId>smart-cap</artifactId>
-	<version>release-2.0.0</version>
+	<version>v2.0.0</version>
 </dependency>
 ----
 
@@ -131,7 +131,7 @@ the checks before publishing.
 
 == Release
 
-Release tags use the `release-` prefix, for example `release-2.0.0`. The Gradle
+Release tags use the `v` prefix, for example `v2.0.0`. The Gradle
 project version is `2.0.0`; the JitPack dependency version is the complete tag.
 After checks pass, push the release commit and tag. Verify that the tagged Java
 archive (JAR) and Project Object Model (POM) dependency metadata resolve through

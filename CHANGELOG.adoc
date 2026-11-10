@@ -2,6 +2,8 @@
 
 == 2.0.0 — 2026-11-10
 
+* Use `v2.0.0` as the release tag and JitPack dependency version.
+
 * Convert all production filters from Groovy to Java, retaining Java 8 compatibility.
 * Keep Groovy and Spock as test dependencies only; remove the unused logging dependency.
 * Preserve public filter names, constructors, results, and town dictionary accessors.
